@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.wusuowei.mapper.OperationLogMapper">
+    <insert id="insertOperation">
+        INSERT INTO operation
+        (operate_empId, operate_empName, class_name, method_name, method_params, return_value, cost_time, operate_time)
+        VALUES
+            (#{operateEmpId}, #{operateEmpName}, #{className}, #{methodName}, #{methodParams}, #{returnValue}, #{costTime}, #{operateTime})
+    </insert>
+    <select id="list" resultType="com.project.wusuowei.entity.OperationLog">
+        SELECT
+            id,
+            operate_empid AS operateEmpId,
+            operate_time AS operateTime,
+            class_name AS className,
+            method_name AS methodName,
+            method_params AS methodParams,
+            return_value AS returnValue,
+            cost_time AS costTime,
+            operate_empname AS operateEmpName
+        FROM
+            operation
+        ORDER BY
+            operate_time DESC
+    </select>
+
+
+</mapper>

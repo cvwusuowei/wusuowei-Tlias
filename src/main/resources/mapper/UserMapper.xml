@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.wusuowei.mapper.UserMapper">
+
+    <!--查询操作-->
+    <select id="findAll" resultType="com.project.wusuowei.entity.User">
+        select * from user;
+    </select>
+    <select id="selectByNameLoginDto" resultType="com.project.wusuowei.model.dto.LoginDto">
+        select u.id, u.user_name as username, u.name from user u where u.user_name = #{username};
+    </select>
+
+</mapper>

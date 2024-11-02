@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.wusuowei.mapper.StudentMapper">
+    <resultMap id="studentResultMap" type="com.project.wusuowei.model.vo.StudentVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="no" property="no"/>
+        <result column="gender" property="gender"/>
+        <result column="phone" property="phone"/>
+        <result column="id_card" property="idCard"/>
+        <result column="is_college" property="isCollege"/>
+        <result column="address" property="address"/>
+        <result column="degree" property="degree"/>
+        <result column="graduation_date" property="graduationDate"/>
+        <result column="clazz_id" property="clazzId"/>
+        <result column="violation_count" property="violationCount"/>
+        <result column="violation_score" property="violationScore"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="clazzName" property="clazzName"/> <!-- 来自 JOIN 查询 -->
+    </resultMap>
+
+    <!-- 根据学生名字、学历和班级名称ID进行动态条件查询 -->
+    <select id="list" resultType="com.project.wusuowei.model.vo.StudentVO">
+        SELECT s.*, c.name AS clazzName
+        FROM student s
+        LEFT JOIN clazz c ON s.clazz_id = c.id
+        <where>
+            <!-- 学生姓名 -->
+            <if test="name != null and name != ''">
+                s.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <!-- 学历 -->
+            <if test="degree != null">
+                <if test="name != null and name != ''"> AND </if>
+                s.degree = #{degree}
+            </if>
+            <!-- 班级ID -->
+            <if test="clazzId != null and clazzId != ''">
+                <if test="name != null or degree != null"> AND </if>
+                s.clazz_id = #{clazzId}
+            </if>
+        </where>
+        <!-- 按更新时间排序 -->
+        ORDER BY s.update_time DESC
+    </select>
+    <select id="getById" resultType="com.project.wusuowei.model.vo.StudentVO" parameterType="java.lang.Integer">
+        <!-- 根据ID查询学生的详细信息 -->
+        SELECT s.*,
+        c.name AS clazz_name
+        FROM student s
+        LEFT JOIN clazz c ON s.clazz_id = c.id
+        WHERE s.id = #{id}
+    </select>
+    <!-- 统计员工的学历信息 -->
+    <select id="countDegreeData" resultType="java.util.Map">
+        SELECT
+            CASE degree
+                WHEN 1 THEN '初中'
+                WHEN 2 THEN '高中'
+                WHEN 3 THEN '大专'
+                WHEN 4 THEN '本科'
+                WHEN 5 THEN '硕士'
+                WHEN 6 THEN '博士'
+                END AS name,
+            COUNT(*) AS value
+        FROM student
+        GROUP BY degree;
+    </select>
+    <!-- 统计各个班级的学生人数 -->
+    <select id="countClazzStudentData" resultType="java.util.Map">
+        SELECT
+            c.name AS clazzName,
+            COUNT(s.id) AS studentCount
+        FROM clazz c
+                 LEFT JOIN student s ON c.id = s.clazz_id
+        GROUP BY c.id, c.name
+        ORDER BY c.name;  -- 根据班级名称排序
+
+    </select>
+</mapper>
