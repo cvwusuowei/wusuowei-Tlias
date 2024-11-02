@@ -4,6 +4,7 @@ package com.project.wusuowei.aspect;
 import cn.hutool.core.date.StopWatch;
 import com.project.wusuowei.model.dto.OperationLogDTO;
 import com.project.wusuowei.serivce.OperationLogService;
+import com.project.wusuowei.utils.UserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -57,8 +58,8 @@ public class OperationLogAspect {
         OperationLogDTO operationLogDTO = new OperationLogDTO();
 
         // 设置操作日志信息
-        operationLogDTO.setOperateEmpId(6); // 示例用户ID，可以动态获取当前登录用户
-        operationLogDTO.setOperateEmpName("wusuowei"); // 示例用户名
+        operationLogDTO.setOperateEmpId(UserUtil.getUserDetailsDTO().getId()); // 示例用户ID，可以动态获取当前登录用户
+        operationLogDTO.setOperateEmpName(UserUtil.getUserDetailsDTO().getUserName()); // 示例用户名
         operationLogDTO.setClassName(targetClass.getName());
         operationLogDTO.setMethodName(targetMethod.getName());
         String methodParams = Arrays.toString(joinPoint.getArgs());
