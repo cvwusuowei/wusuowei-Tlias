@@ -34,6 +34,7 @@ public class UserService implements UserDetailsService {
             LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
             wrapper.eq(User::getUserName, user.getUserName());
             if (userMapper.selectList(wrapper).size() == 0){
+                System.err.println(user);
                 userMapper.insert(user);
                 return user;
             }else {

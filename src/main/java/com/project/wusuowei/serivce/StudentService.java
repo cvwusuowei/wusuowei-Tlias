@@ -17,7 +17,7 @@ public interface StudentService extends IService<Student> {
 
     PageBean page(StudentQueryParam param) throws Exception;
 
-    boolean save(Student student);
+    boolean save(StudentVO studentVo);
 
     StudentVO getInfo(Integer id);
 

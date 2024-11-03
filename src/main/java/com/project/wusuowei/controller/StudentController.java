@@ -46,9 +46,9 @@ public class StudentController {
      */
     @OptLog(optType = SAVE)
     @PostMapping
-    public Result save(@RequestBody Student student){
-        log.info("请求参数emp: {}", student);
-        studentService.save(student);
+    public Result save(@RequestBody StudentVO studentVO){
+        log.info("请求参数emp: {}", studentVO);
+        studentService.save(studentVO);
         return Result.success();
     }
 

@@ -25,7 +25,7 @@ public interface StudentMapper extends BaseMapper<Student> {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("INSERT INTO student(name, no, gender, phone, id_card, is_college, address, degree, graduation_date, clazz_id,create_time,update_time) " +
             "VALUES (#{name}, #{no}, #{gender}, #{phone}, #{idCard}, #{isCollege}, #{address}, #{degree}, #{graduationDate}, #{clazzId}, #{createTime}, #{updateTime})")
-    int insert(StudentVO studentVO);
+    int insertStudent(StudentVO studentVO);
 
     StudentVO getById(Integer id);
 

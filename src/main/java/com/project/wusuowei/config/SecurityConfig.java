@@ -64,7 +64,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // 配置 HttpSecurity
             http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                    .requestMatchers(HttpMethod.POST, "/login").permitAll() //登录放行
+                    .requestMatchers(HttpMethod.POST, "/login","/register").permitAll() //登录放行
                     
                     .requestMatchers("/api/**").permitAll() // 允许访问所有 API 接口
                     .anyRequest().authenticated()

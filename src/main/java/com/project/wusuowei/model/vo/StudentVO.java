@@ -31,9 +31,9 @@ public class StudentVO {
     private Integer clazzId; //班级ID
     private Short violationCount; //违纪次数
     private Short violationScore; //违纪扣分
-    @TableField(fill = FieldFill.INSERT)
+
     private LocalDateTime createTime; //创建时间
-    @TableField(fill = FieldFill.UPDATE)
+
     private LocalDateTime updateTime; //修改时间
 
     private String clazzName;//班级名称

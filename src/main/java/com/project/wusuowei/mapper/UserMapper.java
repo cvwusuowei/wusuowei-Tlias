@@ -4,6 +4,7 @@ package com.project.wusuowei.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.project.wusuowei.entity.User;
 import com.project.wusuowei.model.dto.LoginDto;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public interface UserMapper extends BaseMapper<User> {
      * 查询全部
      */
    
-    public  List<User> findAll();
+    List<User> findAll();
     @Transactional(propagation = Propagation.REQUIRED)
     LoginDto selectByNameLoginDto(String userName);
 }

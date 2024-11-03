@@ -49,14 +49,13 @@ public class StudentServiceImpl  extends ServiceImpl<StudentMapper, Student> imp
 
     @Transactional
     @Override
-
-    public boolean save(Student student) {
+    public boolean save(StudentVO studentVO) {
         //1.补全基础属性
-        student.setCreateTime(LocalDateTime.now());
-        student.setUpdateTime(LocalDateTime.now());
+        studentVO.setCreateTime(LocalDateTime.now());
+        studentVO.setUpdateTime(LocalDateTime.now());
         //2.保存员工基本信息
-        studentMapper.insert(student);
-        System.err.println(student);
+        studentMapper.insertStudent(studentVO);
+        System.err.println(studentVO);
         return false;
     }
 

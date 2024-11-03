@@ -27,7 +27,7 @@ public interface ClazzMapper extends BaseMapper<Clazz> {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("INSERT INTO clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time) " +
             "VALUES (#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})")
-    int insert(Clazz clazz);
+    int insertClazz(Clazz clazz);
     /**
      * 根据ID查询员工详细信息
      */

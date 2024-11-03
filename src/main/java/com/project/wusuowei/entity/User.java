@@ -1,5 +1,7 @@
 package com.project.wusuowei.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ import java.util.List;
 @Table("user")
 
 public class User implements UserDetails {
+    @TableId(type = IdType.AUTO)
     private Integer  id; //ID
     private String userName; //用户名
     private String password; //密码

@@ -52,7 +52,7 @@ public class ClazzServiceImpl implements ClazzService {
         clazz.setCreateTime(LocalDateTime.now());
         clazz.setUpdateTime(LocalDateTime.now());
         //2.保存员工基本信息
-        clazzMapper.insert(clazz);
+        clazzMapper.insertClazz(clazz);
         System.err.println(clazz);
 
     }
