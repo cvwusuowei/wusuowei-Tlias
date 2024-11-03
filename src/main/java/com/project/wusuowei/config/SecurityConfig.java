@@ -35,11 +35,17 @@ public class SecurityConfig {
 
     @Resource
     UserService userService;
-
+    @Bean//PasswordEncoder的实现类为BCryptPasswordEncoder
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     @Bean
     public AuthenticationProvider authenticationProvider(){
+        //是AuthenticationManager中管理的其中一个Provider，因为是要访问数据库，所以叫Dao
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        //密码解析
         provider.setPasswordEncoder(passwordEncoder());
+        //传入用户信息
         provider.setUserDetailsService(userService);
         return provider;
     }
@@ -59,12 +65,16 @@ public class SecurityConfig {
         // 配置 HttpSecurity
             http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                     .requestMatchers(HttpMethod.POST, "/login").permitAll() //登录放行
+                    
                     .requestMatchers("/api/**").permitAll() // 允许访问所有 API 接口
                     .anyRequest().authenticated()
             );
-        http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
+        http.authenticationProvider(authenticationProvider());
+
+        //调用过滤器
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+       
         //禁用登录页面
         http.formLogin(AbstractHttpConfigurer::disable);
         //禁用登出页面
@@ -77,16 +87,12 @@ public class SecurityConfig {
         //禁用csrf保护
         http.csrf(AbstractHttpConfigurer::disable);
 
-
         return http.build();
     }
 
 
 
 
-    @Bean//PasswordEncoder的实现类为BCryptPasswordEncoder
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
 }

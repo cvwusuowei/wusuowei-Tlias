@@ -49,16 +49,21 @@ public class UserController {
     @Transactional
     public Result doLogin(@RequestBody LoginReuqestVO request){
         try{
+             //1.UsernamePasswordAuthenticationToken封装认证对象 ,只要用户名密码,没有权限
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
+            //2.调用authenticationManager的authenticate方法进行认证,验证账号密码
             Authentication authentication = authenticationManager.authenticate(auth);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            //3.返回 UserDetails对象
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            System.err.println("aaa");
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             LoginDto loginDto = userMapper.selectByNameLoginDto(request.getUsername());
             loginDto.setToken(jwtUtil.getToken(userDetails.getUsername()));
             return Result.success(loginDto);
+
         } catch (Exception e){
             log.error(e.getMessage());
-            log.error("userName or password is not correct");
+            log.error("用户名或密码不正确");
             return Result.error("登录失败");
         }
     }

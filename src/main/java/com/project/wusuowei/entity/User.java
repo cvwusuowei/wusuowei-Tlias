@@ -1,5 +1,7 @@
 package com.project.wusuowei.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("user")
+
 public class User implements UserDetails {
     private Integer  id; //ID
     private String userName; //用户名
@@ -29,6 +32,7 @@ public class User implements UserDetails {
 
     private String role; //权限
     @Override//用户所拥有的权限，返回的列表中至少得有一个值，否则这个用户啥权限都没有
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
     }
