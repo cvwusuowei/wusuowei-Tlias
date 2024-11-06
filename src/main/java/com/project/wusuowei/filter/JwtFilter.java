@@ -42,13 +42,15 @@ public class JwtFilter extends OncePerRequestFilter {
         //检查token是否可以
         if (jwtToken != null && !jwtToken.isEmpty() && jwtUtil.checkToken(jwtToken)){
             try {//token可用
+                System.out.println(jwtToken);
                 Claims claims = jwtUtil.getTokenBody(jwtToken);
                 String username = (String) claims.get("userName");
                 //获取用户信息,查询数据库
                 UserDetails user = userService.loadUserByUsername(username);
-                redisUtil.hSet("tlias",username,user,EXPIRE_TIME);
+//                redisUtil.hSet("tlias",username,user,EXPIRE_TIME);
                 if (user != null){
-                    /*1.UsernamePasswordAuthenticationToken封装认证对象
+                    /*
+                      1.UsernamePasswordAuthenticationToken封装认证对象
                       2.调用.getAuthorities()方法进行方法认证,获取认证权限
                       3.获取UserDetails对象,loadUserByUsername获取账号密码
                      */

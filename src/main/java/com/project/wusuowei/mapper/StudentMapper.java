@@ -19,7 +19,7 @@ import java.util.Map;
 @Repository
 public interface StudentMapper extends BaseMapper<Student> {
 
-    List<Student> list(StudentQueryParam param);
+    List<StudentVO> list(StudentQueryParam param);
 
 
     @Options(useGeneratedKeys = true, keyProperty = "id")

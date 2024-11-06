@@ -38,10 +38,10 @@ public class StudentServiceImpl  extends ServiceImpl<StudentMapper, Student> imp
         PageHelper.startPage(param.getPage(), param.getPageSize());
 
         //2. 执行查询
-        List<Student> studentList = studentMapper.list(param);
+        List<StudentVO> studentList = studentMapper.list(param);
 
         //3. 解析封装分页结果
-        Page<Student> p = (Page<Student>) studentList;
+        Page<StudentVO> p = (Page<StudentVO>) studentList;
 
         return new PageBean(p.getTotal(), p.getResult());
     }

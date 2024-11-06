@@ -55,22 +55,24 @@ public class OperationLogAspect {
         Class<?> targetClass = joinPoint.getTarget().getClass();
         MethodSignature ms = (MethodSignature) joinPoint.getSignature();
         Method targetMethod = targetClass.getDeclaredMethod(ms.getName(), ms.getParameterTypes());
+
         OperationLogDTO operationLogDTO = new OperationLogDTO();
 
+         String methodParams = Arrays.toString(joinPoint.getArgs());
+         if (methodParams.length() > 255) {
+             methodParams = methodParams.substring(0, 255); // 截断到 255 个字符
+         }
         // 设置操作日志信息
         operationLogDTO.setOperateEmpId(UserUtil.getUserDetailsDTO().getId()); // 示例用户ID，可以动态获取当前登录用户
         operationLogDTO.setOperateEmpName(UserUtil.getUserDetailsDTO().getUserName()); // 示例用户名
         operationLogDTO.setClassName(targetClass.getName());
         operationLogDTO.setMethodName(targetMethod.getName());
-        String methodParams = Arrays.toString(joinPoint.getArgs());
-        if (methodParams.length() > 255) {
-            methodParams = methodParams.substring(0, 255); // 截断到 255 个字符
-        }
+
         operationLogDTO.setMethodParams(methodParams);
         operationLogDTO.setCostTime(time);
         operationLogDTO.setOperateTime(new Date());
 
-        // 使用传入的 result 作为返回值
+//         使用传入的 result 作为返回值
         operationLogDTO.setReturnValue(result != null ? result.toString() : "null");
 
         // 保存用户行为日志

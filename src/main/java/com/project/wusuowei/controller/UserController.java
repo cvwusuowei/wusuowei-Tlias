@@ -56,9 +56,10 @@ public class UserController {
             //3.返回 UserDetails对象
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             System.err.println("aaa");
-            SecurityContextHolder.getContext().setAuthentication(authentication);
             LoginDto loginDto = userMapper.selectByNameLoginDto(request.getUsername());
             loginDto.setToken(jwtUtil.getToken(userDetails.getUsername()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
             return Result.success(loginDto);
 
         } catch (Exception e){
