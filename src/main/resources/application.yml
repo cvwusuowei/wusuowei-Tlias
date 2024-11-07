@@ -8,7 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/web?serverTimezone=Asia/Shanghai&allowMultiQueries=true
     #    url: jdbc:mysql://localhost:3306/aurora?serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: root
-    password: 211317wt
+    password: 
     hikari:
       minimum-idle: 10
       idle-timeout: 180000
